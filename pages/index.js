@@ -81,6 +81,9 @@ export default function Home() {
       setItems(JSON.parse(data));
     }
   }, []);
+const handleCheck = event => {
+    console.log(event.target.value);
+}
 
   return (
     <>
@@ -90,8 +93,8 @@ export default function Home() {
           <h1>ToDo App</h1>
         </div>
         <div className="container p-2">
-          <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">
+          <div className="mb-3">
+            <label htmlFor="exampleFormControlInput1" className="form-label">
               Your Task/ Note
             </label>
             <input
@@ -100,11 +103,11 @@ export default function Home() {
               name="text"
               value={todoItem.text || ""}
               onChange={handleChange}
-              class="form-control"
+              className="form-control"
             />
           </div>
-          <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">
+          <div className="mb-3">
+            <label htmlFor="exampleFormControlTextarea1" className="form-label">
               Message
             </label>
             <textarea
@@ -113,40 +116,22 @@ export default function Home() {
               name="desc"
               value={todoItem.desc || ""}
               onChange={handleChange}
-              class="form-control"
+              className="form-control"
               rows="3"
             ></textarea>
           </div>
-          <div className="d-flex justify-content-around">
-          <div class="form-check p-3">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault1"
-            />
-            <label class="form-check-label" for="flexRadioDefault1">
-              Todo
-            </label>
-          </div>
-          <div class="form-check p-3">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault2"
-            />
-            <label class="form-check-label" for="flexRadioDefault2">
-              Note
-            </label>
-          </div>
-          <button
-            className=" ms-auto p-2 m-2 btn btn-primary"
-            type="button"
-            onClick={handleAdd}
-          >
-            Add
-          </button>
+          <div className="d-flex justify-content-around" >
+            <select name="task" className="p-2 m-2" onChange={handleCheck}>
+              <option value="todo">Todo</option>
+              <option value="notes">Notes</option>
+            </select>
+            <button
+              className=" ms-auto p-2 m-2 btn btn-primary"
+              type="button"
+              onClick={handleAdd}
+            >
+              Add
+            </button>
           </div>
         </div>
 
@@ -197,7 +182,7 @@ export default function Home() {
                   }}
                 >
                   <div
-                    style={{ marginRight: "40px",cursor: "pointer" }}
+                    style={{ marginRight: "40px", cursor: "pointer" }}
                     onClick={() => handleToggle(id)}
                     className={`${done ? "text-decoration-line-through" : " "}`}
                   >
