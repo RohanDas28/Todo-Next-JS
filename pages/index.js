@@ -89,33 +89,69 @@ export default function Home() {
         <div className="d-flex justify-content-center p-4">
           <h1>ToDo App</h1>
         </div>
-        <div className="d-flex justify-content-center p-2">
-          <input
-            placeholder="Enter your task"
-            type="text"
-            name="text"
-            value={todoItem.text || ""}
-            onChange={handleChange}
-            className="p-2 m-2"
-          />
-          <input
-            placeholder="Enter your description"
-            type="text"
-            name="desc"
-            value={todoItem.desc || ""}
-            onChange={handleChange}
-            className="p-2 m-2"
-          />
+        <div className="container p-2">
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">
+              Your Task/ Note
+            </label>
+            <input
+              placeholder="Enter your Task/ Note"
+              type="text"
+              name="text"
+              value={todoItem.text || ""}
+              onChange={handleChange}
+              class="form-control"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">
+              Message
+            </label>
+            <textarea
+              placeholder="Enter your description"
+              type="text"
+              name="desc"
+              value={todoItem.desc || ""}
+              onChange={handleChange}
+              class="form-control"
+              rows="3"
+            ></textarea>
+          </div>
+          <div className="d-flex justify-content-around">
+          <div class="form-check p-3">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault1"
+            />
+            <label class="form-check-label" for="flexRadioDefault1">
+              Todo
+            </label>
+          </div>
+          <div class="form-check p-3">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault2"
+            />
+            <label class="form-check-label" for="flexRadioDefault2">
+              Note
+            </label>
+          </div>
           <button
-            className=" p-2 m-2 btn btn-primary"
+            className=" ms-auto p-2 m-2 btn btn-primary"
             type="button"
             onClick={handleAdd}
           >
             Add
           </button>
+          </div>
         </div>
+
         <div className="d-flex flex-column align-items-center">
-          <ul>
+          <ul data-toggle="tooltip" title="Click to Mark as Done">
             {items
               .filter(({ done }) => !done)
               .map(({ id, text, done, date, desc }) => (
@@ -128,7 +164,7 @@ export default function Home() {
                   }}
                 >
                   <div
-                    style={{ marginRight: "40px" }}
+                    style={{ marginRight: "40px", cursor: "pointer" }}
                     onClick={() => handleToggle(id)}
                   >
                     <div className="">
@@ -148,7 +184,7 @@ export default function Home() {
               ))}
           </ul>
           <hr style={{ width: "35%" }} />
-          <ul>
+          <ul data-toggle="tooltip" title="Click to Uncheck">
             {items
               .filter(({ done }) => done)
               .map(({ id, text, done, date, desc }) => (
@@ -161,7 +197,7 @@ export default function Home() {
                   }}
                 >
                   <div
-                    style={{ marginRight: "40px" }}
+                    style={{ marginRight: "40px",cursor: "pointer" }}
                     onClick={() => handleToggle(id)}
                     className={`${done ? "text-decoration-line-through" : " "}`}
                   >
