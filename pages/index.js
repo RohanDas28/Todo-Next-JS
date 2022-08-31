@@ -23,6 +23,7 @@ export default function Home() {
     setTodoItem({ ...todoItem, [e.target.name]: e.target.value });
     console.log(todoItem);
   };
+  const [type, settype] = useState("todo");
 
   const handleAdd = () => {
     if (todoItem.text && todoItem.desc) {
@@ -35,6 +36,7 @@ export default function Home() {
           desc: todoItem.desc,
           date: date,
           done: false,
+          type: type,
         },
         ...items,
       ];
@@ -81,9 +83,7 @@ export default function Home() {
       setItems(JSON.parse(data));
     }
   }, []);
-const handleCheck = event => {
-    console.log(event.target.value);
-}
+
 
   return (
     <>
@@ -120,8 +120,14 @@ const handleCheck = event => {
               rows="3"
             ></textarea>
           </div>
-          <div className="d-flex justify-content-around" >
-            <select name="task" className="p-2 m-2" onChange={handleCheck}>
+          <div className="d-flex justify-content-around">
+            <select
+              name="task"
+              className="p-2 m-2"
+              onChange={(e) => {
+                settype(e.target.value);
+              }}
+            >
               <option value="todo">Todo</option>
               <option value="notes">Notes</option>
             </select>
@@ -135,73 +141,129 @@ const handleCheck = event => {
           </div>
         </div>
 
-        <div className="d-flex flex-column align-items-center">
-          <ul data-toggle="tooltip" title="Click to Mark as Done">
-            {items
-              .filter(({ done }) => !done)
-              .map(({ id, text, done, date, desc }) => (
-                <li
-                  key={id}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginTop: "10px",
-                  }}
-                >
-                  <div
-                    style={{ marginRight: "40px", cursor: "pointer" }}
-                    onClick={() => handleToggle(id)}
-                  >
-                    <div className="">
-                      <b>{text}</b> {date}
-                    </div>
-                    <div className="">{desc}</div>
-                  </div>
-                  <button
-                    className=" btn btn-sm btn-danger"
-                    onClick={() => {
-                      handleDelete(id);
+        <div
+          className="d-flex"
+          style={{
+            justifyContent: "space-between",
+            marginLeft: "10%",
+            marginRight: "10%",
+          }}
+        >
+          <div>
+            <h1>Notes</h1>
+            <ul data-toggle="tooltip" title="Click to Mark as Done">
+              {items
+                .filter(({ done }) => !done)
+                .map(
+                  ({ id, text, done, date, desc, type }) =>
+                    type == "notes" && (
+                      <li
+                        key={id}
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          marginTop: "10px",
+                        }}
+                      >
+                        <div
+                          style={{ marginRight: "40px", cursor: "pointer" }}
+                          onClick={() => handleToggle(id)}
+                        >
+                          <div className="">
+                            <b>{text}</b> {date}
+                          </div>
+                          <div className="">{desc}</div>
+                        </div>
+                        <button
+                          className=" btn btn-sm btn-danger"
+                          onClick={() => {
+                            handleDelete(id);
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </li>
+                    )
+                )}
+            </ul>
+          </div>
+          <div>
+            <h1>Todos</h1>
+            <ul data-toggle="tooltip" title="Click to Mark as Done">
+              {items
+                .filter(({ done }) => !done)
+                .map(
+                  ({ id, text, done, date, desc, type }) =>
+                    type == "todo" && (
+                      <li
+                        key={id}
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          marginTop: "10px",
+                        }}
+                      >
+                        <div
+                          style={{ marginRight: "40px", cursor: "pointer" }}
+                          onClick={() => handleToggle(id)}
+                        >
+                          <div className="">
+                            <b>{text}</b> {date}
+                          </div>
+                          <div className="">{desc}</div>
+                        </div>
+                        <button
+                          className=" btn btn-sm btn-danger"
+                          onClick={() => {
+                            handleDelete(id);
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </li>
+                    )
+                )}
+            </ul>
+          </div>
+          {/* <hr style={{ width: "35%" }} /> */}
+          <div>
+            <h1>Tasks/ Notes Done</h1>
+            <ul data-toggle="tooltip" title="Click to Uncheck">
+              {items
+                .filter(({ done }) => done)
+                .map(({ id, text, done, date, desc }) => (
+                  <li
+                    key={id}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginTop: "10px",
                     }}
                   >
-                    Delete
-                  </button>
-                </li>
-              ))}
-          </ul>
-          <hr style={{ width: "35%" }} />
-          <ul data-toggle="tooltip" title="Click to Uncheck">
-            {items
-              .filter(({ done }) => done)
-              .map(({ id, text, done, date, desc }) => (
-                <li
-                  key={id}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginTop: "10px",
-                  }}
-                >
-                  <div
-                    style={{ marginRight: "40px", cursor: "pointer" }}
-                    onClick={() => handleToggle(id)}
-                    className={`${done ? "text-decoration-line-through" : " "}`}
-                  >
-                    <div className="">
-                      <b>{text}</b> {date}
+                    <div
+                      style={{ marginRight: "40px", cursor: "pointer" }}
+                      onClick={() => handleToggle(id)}
+                      className={`${
+                        done ? "text-decoration-line-through" : " "
+                      }`}
+                    >
+                      <div className="">
+                        <b>{text}</b> {date}
+                      </div>
+                      <div className="">{desc}</div>
                     </div>
-                    <div className="">{desc}</div>
-                  </div>
-                  <button
-                    className="btn btn-sm btn-danger"
-                    onClick={() => {
-                      handleDelete(id);
-                    }}
-                  >
-                    Delete
-                  </button>
-                </li>
-              ))}
-          </ul>
+                    <button
+                      className="btn btn-sm btn-danger"
+                      onClick={() => {
+                        handleDelete(id);
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </li>
+                ))}
+            </ul>
+          </div>
         </div>
       </div>
 
