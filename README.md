@@ -10,7 +10,7 @@ Todos:
 
 ### Version 2.0
 - [ ] New Notes Section
-- [ ] Tooltips on Hovering any Todo/Notes
+- [x] Tooltips on Hovering any Todo/Notes
 - [ ] Confirmation on Deletation
 - [ ] 2 separate Rows for Done Todos and Archived Notes
 
